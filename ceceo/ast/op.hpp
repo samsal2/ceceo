@@ -75,6 +75,13 @@ public:
   atom execute(context &context) override;
 };
 
+class eq_op : public op {
+public:
+  using op::op;
+
+  atom execute(context &context) override;
+};
+
 
 } // ceceo::ast
 

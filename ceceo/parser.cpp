@@ -118,6 +118,8 @@ std::unique_ptr<ast::list> parser::parse_list() {
         list.push_back(parse_literal());
       else if ("not" == name)
         list.push_back(parse_literal());
+      else if ("eq" == name)
+        list.push_back(parse_literal());
       else if (detail::is_number(name))
         list.push_back(parse_literal());
       else if (detail::is_string(name))
@@ -194,6 +196,9 @@ std::unique_ptr<ast::list> parser::parse_list() {
 
       if ("not" == name)
         return std::make_unique<ast::not_op>(source, std::move(list));
+
+      if ("eq" == name)
+        return std::make_unique<ast::eq_op>(source, std::move(list));
 
       return std::make_unique<ast::list>(source, std::move(list));
     }

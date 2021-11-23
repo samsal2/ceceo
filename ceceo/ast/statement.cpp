@@ -50,7 +50,7 @@ atom set_statement::execute(context &context) {
   auto &first = view().at(1);
 
   if (!first->is_variable()) 
-    throw std::runtime_error("ast::auto_statement: expected literal");
+    throw std::runtime_error("ast::set_statement: expected literal");
 
   auto &var = static_cast<ast::variable const &>(*first);
   auto &vars = context.variables;

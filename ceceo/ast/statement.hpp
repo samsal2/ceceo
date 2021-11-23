@@ -57,7 +57,7 @@ public:
   atom execute(context &context) override;
 };
 
-// TODO(samuel) mode this outta here
+// TODO(samuel): move this outta here
 class print_statement : public statement {
 public:
   using statement::statement;
