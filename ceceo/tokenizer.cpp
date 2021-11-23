@@ -19,6 +19,9 @@ token tokenizer::next_token() {
   if (')' == peek())
     return submit(consume(), token::type::right_parenthesis);
 
+  if ('\"' == peek())
+    return submit(consume_string(), token::type::atom);
+
   if (detail::is_atom(peek()))
     return submit(consume_atom(), token::type::atom);
 

@@ -75,6 +75,15 @@ private:
 
   constexpr auto consume_atom() { return consume_while(detail::is_atom); }
 
+  constexpr auto consume_string() {
+    auto start = position_;
+    consume(); // consume leading "
+    consume_while([](auto c) { return '\"' != c; });
+    consume(); // consume leading "
+
+    return source_range(source_, start, position_);
+  }
+
   token previous_ = {};
   std::size_t position_ = 0;
   std::string_view source_ = {};

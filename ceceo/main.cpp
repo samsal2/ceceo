@@ -18,5 +18,6 @@ int main([[maybe_unused]] int argc, char *argv[]) {
   auto i = ceceo::interpreter({data(code), size(code)});
 
 
-  std::cout << i.interpret() << '\n';
+  auto result = i.interpret();
+  std::cout << "program returned: " << result << '\n';
 }
