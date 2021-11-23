@@ -1,7 +1,7 @@
 # ceceo
 a toy lisp like language
 
-''' lisp
+```lisp
 (auto i 0)
 
 (while (< i 30)
@@ -11,4 +11,4 @@ a toy lisp like language
           ((not (% i 5)) (print "Buzz"))
           (print i))
     (set i (+ i 1))))
-'''
+```
