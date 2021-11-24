@@ -1,7 +1,7 @@
 #ifndef CECEO_INTERPRETER_HPP_
 #define CECEO_INTERPRETER_HPP_
 
-#include "ceceo/parser.hpp"
+#include <ceceo/parser.hpp>
 
 namespace ceceo {
 
@@ -15,6 +15,6 @@ private:
   std::vector<std::unique_ptr<ast::list>> expressions_;
 };
 
-};
+}; // namespace ceceo
 
 #endif

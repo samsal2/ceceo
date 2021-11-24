@@ -1,7 +1,7 @@
 #ifndef CECEO_AST_NULL_HPP_
 #define CECEO_AST_NULL_HPP_
 
-#include "ceceo/ast/node.hpp"
+#include <ceceo/ast/node.hpp>
 
 namespace ceceo::ast {
 

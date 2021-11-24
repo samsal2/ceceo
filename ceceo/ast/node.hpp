@@ -1,13 +1,12 @@
 #ifndef CECEO_AST_NODE_HPP_
 #define CECEO_AST_NODE_HPP_
 
-#include "ceceo/atom.hpp"
-#include "ceceo/source_range.hpp"
-
+#include <ceceo/atom.hpp>
+#include <ceceo/source_range.hpp>
 
 namespace ceceo {
 class context;
-} //
+} // namespace ceceo
 
 namespace ceceo::ast {
 

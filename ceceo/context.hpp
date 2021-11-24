@@ -1,10 +1,9 @@
 #ifndef CECEO_CONTEXT_HPP_
 #define CECEO_CONTEXT_HPP_
 
-#include <unordered_map>
+#include <ceceo/atom.hpp>
 #include <string_view>
-
-#include "ceceo/atom.hpp"
+#include <unordered_map>
 
 namespace ceceo {
 
@@ -13,6 +12,6 @@ public:
   std::unordered_map<std::string_view, atom> variables;
 };
 
-} // ceceo
+} // namespace ceceo
 
 #endif

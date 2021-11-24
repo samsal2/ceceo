@@ -1,7 +1,5 @@
-#include "ceceo/interpreter.hpp"
-
-#include "ceceo/context.hpp"
-
+#include <ceceo/context.hpp>
+#include <ceceo/interpreter.hpp>
 #include <iostream>
 
 namespace ceceo {
@@ -25,5 +23,4 @@ atom interpreter::interpret() {
   return result;
 }
 
-  
-}
+} // namespace ceceo

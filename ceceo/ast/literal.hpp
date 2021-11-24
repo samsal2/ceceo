@@ -1,21 +1,19 @@
 #ifndef CECEO_LITERAL_HPP_
 #define CECEO_LITERAL_HPP_
 
-#include "ceceo/badge.hpp"
-#include "ceceo/ast/node.hpp"
-
+#include <ceceo/ast/node.hpp>
+#include <ceceo/badge.hpp>
 
 namespace ceceo {
 class parser;
-} // ceceo
+} // namespace ceceo
 
 namespace ceceo::ast {
 
-
 class literal : public node {
 public:
-  constexpr explicit literal(source_range source, atom value) noexcept 
-    : node(source), value_(value) {}
+  constexpr explicit literal(source_range source, atom value) noexcept
+      : node(source), value_(value) {}
 
   virtual bool is_literal() const noexcept override { return true; }
 

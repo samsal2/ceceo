@@ -1,11 +1,10 @@
 #ifndef CECEO_PARSER_HPP_
 #define CECEO_PARSER_HPP_
 
-#include "ceceo/tokenizer.hpp"
-
-#include "ceceo/ast/literal.hpp"
-#include "ceceo/ast/list.hpp"
-#include "ceceo/ast/variable.hpp"
+#include <ceceo/ast/list.hpp>
+#include <ceceo/ast/literal.hpp>
+#include <ceceo/ast/variable.hpp>
+#include <ceceo/tokenizer.hpp>
 
 namespace ceceo {
 
@@ -19,7 +18,7 @@ public:
 
     if (token.type() != type)
       throw std::runtime_error("invalid token in parser");
-    
+
     tokenizer_.next_token();
 
     return token;
@@ -27,7 +26,7 @@ public:
 
   constexpr auto previous() const noexcept { return tokenizer_.previous(); }
   constexpr auto done() const noexcept { return tokenizer_.done(); }
- 
+
   std::unique_ptr<ast::node> parse();
   std::unique_ptr<ast::literal> parse_literal();
   std::unique_ptr<ast::variable> parse_variable();

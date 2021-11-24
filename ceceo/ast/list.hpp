@@ -1,8 +1,7 @@
 #ifndef CECEO_AST_LIST_HPP_
 #define CECEO_AST_LIST_HPP_
 
-#include "ceceo/ast/node.hpp"
-
+#include <ceceo/ast/node.hpp>
 #include <vector>
 
 namespace ceceo::ast {
@@ -22,7 +21,7 @@ public:
   }
 
   constexpr auto size() const noexcept { return std::size(list_); }
-  
+
 private:
   std::vector<std::unique_ptr<node>> list_;
 };

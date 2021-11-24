@@ -1,10 +1,8 @@
-#include "ceceo/parser.hpp"
-
-#include "ceceo/ast/op.hpp"
-#include "ceceo/ast/statement.hpp"
-#include "ceceo/ast/variable.hpp"
-#include "ceceo/context.hpp"
-
+#include <ceceo/ast/op.hpp>
+#include <ceceo/ast/statement.hpp>
+#include <ceceo/ast/variable.hpp>
+#include <ceceo/context.hpp>
+#include <ceceo/parser.hpp>
 #include <charconv>
 #include <iostream>
 #include <stdexcept>
@@ -35,7 +33,7 @@ constexpr auto is_string(std::string_view str) noexcept {
 }; // namespace detail
 
 std::unique_ptr<ast::literal> parser::parse_literal() {
-  auto token = tokenizer_.previous();
+  auto const token = tokenizer_.previous();
 
   if (detail::is_string(token.value()))
     return parse_string();
@@ -47,25 +45,25 @@ std::unique_ptr<ast::literal> parser::parse_literal() {
   }
 
   consume(token::type::atom);
-  auto str = std::string(begin(token.value()), size(token.value()));
-  auto value = std::atoi(str.c_str());
+  auto const str = std::string(begin(token.value()), size(token.value()));
+  auto const value = std::atoi(str.c_str());
 
   return std::make_unique<ast::literal>(token.range(), atom(value));
 }
 
 std::unique_ptr<ast::variable> parser::parse_variable() {
-  auto token = consume(token::type::atom);
+  auto const token = consume(token::type::atom);
   return std::make_unique<ast::variable>(token.range(),
                                          symbol(token.value()));
 }
 
 std::unique_ptr<ast::literal> parser::parse_string() {
-  auto token = consume(token::type::atom);
+  auto const token = consume(token::type::atom);
   auto value = token.value();
 
   if (!detail::is_string(token.value()))
     throw std::runtime_error("parser: invalid string");
- 
+
   value.remove_prefix(1);
   value.remove_suffix(1);
 
@@ -73,7 +71,7 @@ std::unique_ptr<ast::literal> parser::parse_string() {
 }
 
 std::unique_ptr<ast::list> parser::parse_list() {
-  auto start = consume(token::type::left_parenthesis);
+  auto const start = consume(token::type::left_parenthesis);
   auto list = std::vector<std::unique_ptr<ast::node>>();
 
   while (!tokenizer_.done()) {
@@ -129,24 +127,24 @@ std::unique_ptr<ast::list> parser::parse_list() {
     } break;
 
     case token::type::right_parenthesis: {
-      auto end = consume(token::type::right_parenthesis);
-      auto source = source_range::merge(start.range(), end.range());
+      auto const end = consume(token::type::right_parenthesis);
+      auto const source = source_range::merge(start.range(), end.range());
 
       if (0 == size(list))
         return std::make_unique<ast::list>(source, std::move(list));
 
-      auto &first = list[0];
+      auto const &first = list[0];
 
       if (!first->is_literal())
         return std::make_unique<ast::list>(source, std::move(list));
 
-      auto &literal = static_cast<ast::literal const &>(*first);
-      auto symbol = literal.peek({});
+      auto const &literal = static_cast<ast::literal const &>(*first);
+      auto const symbol = literal.peek({});
 
       if (atom::type::symbol != symbol.type())
         throw std::runtime_error("parser: expected symbol");
 
-      auto name = symbol.as_symbol().value();
+      auto const name = symbol.as_symbol().value();
 
       if ("auto" == name)
         return std::make_unique<ast::auto_statement>(source, std::move(list));
@@ -168,7 +166,8 @@ std::unique_ptr<ast::list> parser::parse_list() {
         return std::make_unique<ast::prog_statement>(source, std::move(list));
 
       if ("print" == name)
-        return std::make_unique<ast::print_statement>(source, std::move(list));
+        return std::make_unique<ast::print_statement>(source,
+                                                      std::move(list));
 
       if ("+" == name)
         return std::make_unique<ast::sum_op>(source, std::move(list));

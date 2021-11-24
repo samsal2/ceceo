@@ -50,7 +50,6 @@ private:
   std::string_view source_ = {};
 };
 
-
 } // namespace ceceo
 
 #endif

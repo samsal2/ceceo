@@ -1,9 +1,9 @@
 #ifndef CECEO_AST_VARIABLE_HPP_
 #define CECEO_AST_VARIABLE_HPP_
 
-#include "ceceo/ast/node.hpp"
-#include "ceceo/atom.hpp"
-#include "ceceo/symbol.hpp"
+#include <ceceo/ast/node.hpp>
+#include <ceceo/atom.hpp>
+#include <ceceo/symbol.hpp>
 
 namespace ceceo::ast {
 

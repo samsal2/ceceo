@@ -8,7 +8,6 @@ template <typename T> class badge {
   badge() = default;
 };
 
-} // ceceo::util
+} // namespace ceceo
 
 #endif
-

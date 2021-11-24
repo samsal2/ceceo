@@ -1,59 +1,59 @@
-#include "ceceo/ast/op.hpp"
+#include <ceceo/ast/op.hpp>
 
 namespace ceceo::ast {
 
 atom sum_op::execute(context &context) {
-  auto lhs = view().at(1)->execute(context);
-  auto rhs = view().at(2)->execute(context);
+  auto const lhs = view().at(1)->execute(context);
+  auto const rhs = view().at(2)->execute(context);
 
   return atom(lhs.as_number().value() + rhs.as_number().value());
 }
 
 atom sub_op::execute(context &context) {
-  auto lhs = view().at(1)->execute(context);
-  auto rhs = view().at(2)->execute(context);
+  auto const lhs = view().at(1)->execute(context);
+  auto const rhs = view().at(2)->execute(context);
 
   return atom(lhs.as_number().value() - rhs.as_number().value());
 }
 
 atom mul_op::execute(context &context) {
-  auto lhs = view().at(1)->execute(context);
-  auto rhs = view().at(2)->execute(context);
+  auto const lhs = view().at(1)->execute(context);
+  auto const rhs = view().at(2)->execute(context);
 
   return atom(lhs.as_number().value() * rhs.as_number().value());
 }
 
 atom div_op::execute(context &context) {
-  auto lhs = view().at(1)->execute(context);
-  auto rhs = view().at(2)->execute(context);
+  auto const lhs = view().at(1)->execute(context);
+  auto const rhs = view().at(2)->execute(context);
 
   return atom(lhs.as_number().value() / rhs.as_number().value());
 }
 
 atom mod_op::execute(context &context) {
-  auto lhs = view().at(1)->execute(context);
-  auto rhs = view().at(2)->execute(context);
+  auto const lhs = view().at(1)->execute(context);
+  auto const rhs = view().at(2)->execute(context);
 
   return atom(lhs.as_number().value() % rhs.as_number().value());
 }
 
 atom less_op::execute(context &context) {
-  auto lhs = view().at(1)->execute(context);
-  auto rhs = view().at(2)->execute(context);
+  auto const lhs = view().at(1)->execute(context);
+  auto const rhs = view().at(2)->execute(context);
 
   return atom(lhs.as_number().value() < rhs.as_number().value());
 }
 
 atom more_op::execute(context &context) {
-  auto lhs = view().at(1)->execute(context);
-  auto rhs = view().at(2)->execute(context);
+  auto const lhs = view().at(1)->execute(context);
+  auto const rhs = view().at(2)->execute(context);
 
   return atom(lhs.as_number().value() > rhs.as_number().value());
 }
 
 atom and_op::execute(context &context) {
-  auto lhs = view().at(1)->execute(context);
-  auto rhs = view().at(2)->execute(context);
+  auto const lhs = view().at(1)->execute(context);
+  auto const rhs = view().at(2)->execute(context);
 
   return atom(lhs.as_number().value() && rhs.as_number().value());
 }
@@ -63,8 +63,8 @@ atom not_op::execute(context &context) {
 }
 
 atom eq_op::execute(context &context) {
-  auto lhs = view().at(1)->execute(context);
-  auto rhs = view().at(2)->execute(context);
+  auto const lhs = view().at(1)->execute(context);
+  auto const rhs = view().at(2)->execute(context);
 
   if (atom::type::number == lhs.type() && atom::type::number == rhs.type())
     return atom(lhs.as_number().value() == rhs.as_number().value());

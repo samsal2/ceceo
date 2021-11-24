@@ -1,7 +1,5 @@
-#include "ceceo/tokenizer.hpp"
-
-#include "ceceo/token.hpp"
-
+#include <ceceo/token.hpp>
+#include <ceceo/tokenizer.hpp>
 #include <iostream>
 
 namespace ceceo {
@@ -9,13 +7,13 @@ namespace ceceo {
 token tokenizer::next_token() {
   consume_whitespace();
 
-  auto const submit = [this] (source_range range, auto type) {
+  auto const submit = [this](source_range range, auto type) {
     return (previous_ = token(range, type));
   };
 
   if ('(' == peek())
     return submit(consume(), token::type::left_parenthesis);
- 
+
   if (')' == peek())
     return submit(consume(), token::type::right_parenthesis);
 
@@ -32,4 +30,4 @@ token tokenizer::next_token() {
   throw std::runtime_error("tokenizer: invalid token");
 }
 
-} // ceceo
+} // namespace ceceo

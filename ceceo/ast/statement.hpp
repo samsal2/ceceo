@@ -1,7 +1,7 @@
 #ifndef CECEO_AST_STATEMENT_HPP_
 #define CECEO_AST_STATEMENT_HPP_
 
-#include "ceceo/ast/list.hpp"
+#include <ceceo/ast/list.hpp>
 
 namespace ceceo::ast {
 
@@ -65,7 +65,6 @@ public:
   atom execute(context &context) override;
 };
 
-
-} // ceceo::ast
+} // namespace ceceo::ast
 
 #endif

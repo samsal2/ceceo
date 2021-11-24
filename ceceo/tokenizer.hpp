@@ -1,8 +1,7 @@
 #ifndef CECEO_TOKENIZER_HPP_
 #define CECEO_TOKENIZER_HPP_
 
-#include "ceceo/token.hpp"
-
+#include <ceceo/token.hpp>
 #include <locale>
 
 namespace ceceo {

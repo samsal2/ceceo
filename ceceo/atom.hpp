@@ -1,9 +1,8 @@
 #ifndef CECEO_AST_ATOM_HPP_
 #define CECEO_AST_ATOM_HPP_
 
-#include "ceceo/symbol.hpp"
-#include "ceceo/number.hpp"
-
+#include <ceceo/number.hpp>
+#include <ceceo/symbol.hpp>
 #include <iostream>
 
 namespace ceceo {
@@ -16,7 +15,7 @@ public:
 
   static constexpr auto null = null_type{};
 
-  constexpr atom([[maybe_unused]] null_type type) noexcept 
+  constexpr atom([[maybe_unused]] null_type type) noexcept
       : type_(type::null), storage_(0) {}
 
   constexpr explicit atom(symbol symbol) noexcept
@@ -39,14 +38,11 @@ public:
     return storage_.as_number;
   }
 
-  constexpr auto is_null() const {
-    return type::null == type_;
-  }
+  constexpr auto is_null() const { return type::null == type_; }
 
   constexpr auto type() const { return type_; }
 
 private:
-
   // TODO compare compile time perf against variant
   enum type type_;
 
@@ -61,25 +57,22 @@ private:
   storage storage_;
 };
 
-inline std::ostream  &
-operator<<(std::ostream &os, atom atom) {
-  switch (atom.type())
-  {
-    case atom::type::null:
-      os << "null";
-      break;
-    case atom::type::number:
-      os << atom.as_number().value();
-      break;
-    case atom::type::symbol:
-      os << atom.as_symbol().value();
-      break;
+inline std::ostream &operator<<(std::ostream &os, atom atom) {
+  switch (atom.type()) {
+  case atom::type::null:
+    os << "null";
+    break;
+  case atom::type::number:
+    os << atom.as_number().value();
+    break;
+  case atom::type::symbol:
+    os << atom.as_symbol().value();
+    break;
   }
 
   return os;
 }
 
-} // ceceo
-
+} // namespace ceceo
 
 #endif

@@ -1,12 +1,11 @@
-#include "ceceo/ast/definition.hpp"
-
-#include "ceceo/context.hpp"
+#include <ceceo/ast/definition.hpp>
+#include <ceceo/context.hpp>
 #include <iostream>
 
 namespace ceceo::ast {
 
 atom definition::execute(context &context) {
-  
+
   if (!view().at(1)->is_variable())
     throw std::runtime_error("expected variable in definition");
 
@@ -18,4 +17,4 @@ atom definition::execute(context &context) {
   return value;
 }
 
-} // ceceo::ast
+} // namespace ceceo::ast
