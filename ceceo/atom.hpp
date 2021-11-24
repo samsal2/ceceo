@@ -1,5 +1,5 @@
-#ifndef CECEO_AST_ATOM_HPP_
-#define CECEO_AST_ATOM_HPP_
+#ifndef CECEO_ATOM_HPP_
+#define CECEO_ATOM_HPP_
 
 #include <ceceo/number.hpp>
 #include <ceceo/symbol.hpp>

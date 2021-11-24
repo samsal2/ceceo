@@ -1,5 +1,3 @@
-#include <ceceo/ast/op.hpp>
-#include <ceceo/ast/statement.hpp>
 #include <ceceo/ast/variable.hpp>
 #include <ceceo/context.hpp>
 #include <ceceo/parser.hpp>
@@ -32,11 +30,11 @@ constexpr auto is_string(std::string_view str) noexcept {
 
 }; // namespace detail
 
-std::unique_ptr<ast::literal> parser::parse_literal() {
+std::unique_ptr<ast::literal> parser::parse_literal(context const &context) {
   auto const token = tokenizer_.previous();
 
   if (detail::is_string(token.value()))
-    return parse_string();
+    return parse_string(context);
 
   if (!detail::is_number(token.value())) {
     consume(token::type::atom);
@@ -51,13 +49,14 @@ std::unique_ptr<ast::literal> parser::parse_literal() {
   return std::make_unique<ast::literal>(token.range(), atom(value));
 }
 
-std::unique_ptr<ast::variable> parser::parse_variable() {
+std::unique_ptr<ast::variable>
+parser::parse_variable([[maybe_unused]] context const &context) {
   auto const token = consume(token::type::atom);
   return std::make_unique<ast::variable>(token.range(),
                                          symbol(token.value()));
 }
 
-std::unique_ptr<ast::literal> parser::parse_string() {
+std::unique_ptr<ast::literal> parser::parse_string([[maybe_unused]] context const &context) {
   auto const token = consume(token::type::atom);
   auto value = token.value();
 
@@ -70,135 +69,32 @@ std::unique_ptr<ast::literal> parser::parse_string() {
   return std::make_unique<ast::literal>(token.range(), atom(symbol(value)));
 }
 
-std::unique_ptr<ast::list> parser::parse_list() {
+std::unique_ptr<ast::list> parser::parse_list(context const &context) {
   auto const start = consume(token::type::left_parenthesis);
   auto list = std::vector<std::unique_ptr<ast::node>>();
 
   while (!tokenizer_.done()) {
     switch (tokenizer_.previous().type()) {
     case token::type::left_parenthesis:
-      list.push_back(parse_list());
+      list.push_back(parse_list(context));
       break;
 
     case token::type::atom: {
-      auto name = tokenizer_.previous().value();
-
-      // TODO(samuel): move this to the env
-      if ("auto" == name)
-        list.push_back(parse_literal());
-      else if ("if" == name)
-        list.push_back(parse_literal());
-      else if ("while" == name)
-        list.push_back(parse_literal());
-      else if ("set" == name)
-        list.push_back(parse_literal());
-      else if ("cond" == name)
-        list.push_back(parse_literal());
-      else if ("prog" == name)
-        list.push_back(parse_literal());
-      else if ("print" == name)
-        list.push_back(parse_literal());
-      else if ("+" == name)
-        list.push_back(parse_literal());
-      else if ("-" == name)
-        list.push_back(parse_literal());
-      else if ("*" == name)
-        list.push_back(parse_literal());
-      else if ("/" == name)
-        list.push_back(parse_literal());
-      else if ("<" == name)
-        list.push_back(parse_literal());
-      else if (">" == name)
-        list.push_back(parse_literal());
-      else if ("%" == name)
-        list.push_back(parse_literal());
-      else if ("and" == name)
-        list.push_back(parse_literal());
-      else if ("not" == name)
-        list.push_back(parse_literal());
-      else if ("eq" == name)
-        list.push_back(parse_literal());
+      auto const name = tokenizer_.previous().value();
+      auto const &builtins = context.builtins;
+      if (end(builtins) != builtins.find(name))
+        list.push_back(parse_literal(context));
       else if (detail::is_number(name))
-        list.push_back(parse_literal());
+        list.push_back(parse_literal(context));
       else if (detail::is_string(name))
-        list.push_back(parse_literal());
+        list.push_back(parse_string(context));
       else
-        list.push_back(parse_variable());
+        list.push_back(parse_variable(context));
     } break;
 
     case token::type::right_parenthesis: {
       auto const end = consume(token::type::right_parenthesis);
       auto const source = source_range::merge(start.range(), end.range());
-
-      if (0 == size(list))
-        return std::make_unique<ast::list>(source, std::move(list));
-
-      auto const &first = list[0];
-
-      if (!first->is_literal())
-        return std::make_unique<ast::list>(source, std::move(list));
-
-      auto const &literal = static_cast<ast::literal const &>(*first);
-      auto const symbol = literal.peek({});
-
-      if (atom::type::symbol != symbol.type())
-        throw std::runtime_error("parser: expected symbol");
-
-      auto const name = symbol.as_symbol().value();
-
-      if ("auto" == name)
-        return std::make_unique<ast::auto_statement>(source, std::move(list));
-
-      if ("if" == name)
-        return std::make_unique<ast::if_statement>(source, std::move(list));
-
-      if ("while" == name)
-        return std::make_unique<ast::while_statement>(source,
-                                                      std::move(list));
-
-      if ("set" == name)
-        return std::make_unique<ast::set_statement>(source, std::move(list));
-
-      if ("cond" == name)
-        return std::make_unique<ast::cond_statement>(source, std::move(list));
-
-      if ("prog" == name)
-        return std::make_unique<ast::prog_statement>(source, std::move(list));
-
-      if ("print" == name)
-        return std::make_unique<ast::print_statement>(source,
-                                                      std::move(list));
-
-      if ("+" == name)
-        return std::make_unique<ast::sum_op>(source, std::move(list));
-
-      if ("-" == name)
-        return std::make_unique<ast::sub_op>(source, std::move(list));
-
-      if ("*" == name)
-        return std::make_unique<ast::mul_op>(source, std::move(list));
-
-      if ("/" == name)
-        return std::make_unique<ast::div_op>(source, std::move(list));
-
-      if ("%" == name)
-        return std::make_unique<ast::mod_op>(source, std::move(list));
-
-      if ("<" == name)
-        return std::make_unique<ast::less_op>(source, std::move(list));
-
-      if (">" == name)
-        return std::make_unique<ast::more_op>(source, std::move(list));
-
-      if ("and" == name)
-        return std::make_unique<ast::and_op>(source, std::move(list));
-
-      if ("not" == name)
-        return std::make_unique<ast::not_op>(source, std::move(list));
-
-      if ("eq" == name)
-        return std::make_unique<ast::eq_op>(source, std::move(list));
-
       return std::make_unique<ast::list>(source, std::move(list));
     }
 
@@ -214,9 +110,9 @@ std::unique_ptr<ast::list> parser::parse_list() {
   throw std::runtime_error("expected )");
 }
 
-std::unique_ptr<ast::node> parser::parse() {
+std::unique_ptr<ast::node> parser::parse(context const &context) {
   consume(token::type::none);
-  return parse_list();
+  return parse_list(context);
 }
 
 } // namespace ceceo

@@ -1,5 +1,7 @@
 target_sources(${PROJECT_NAME} PRIVATE 
   atom.hpp
+  builtin.cpp
+  builtin.hpp
   context.cpp
   context.hpp
   interpreter.cpp

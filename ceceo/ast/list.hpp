@@ -16,9 +16,7 @@ public:
 
   bool is_list() const noexcept override { return true; }
 
-  atom execute([[maybe_unused]] context &context) override {
-    return atom::null;
-  }
+  atom execute(context &context) override;
 
   constexpr auto size() const noexcept { return std::size(list_); }
 

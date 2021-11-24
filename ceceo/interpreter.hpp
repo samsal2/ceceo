@@ -2,6 +2,7 @@
 #define CECEO_INTERPRETER_HPP_
 
 #include <ceceo/parser.hpp>
+#include <ceceo/context.hpp>
 
 namespace ceceo {
 
@@ -12,6 +13,7 @@ public:
   atom interpret();
 
 private:
+  context context_;
   std::vector<std::unique_ptr<ast::list>> expressions_;
 };
 
