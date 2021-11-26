@@ -4,7 +4,7 @@
 #include <iostream>
 #include <sstream>
 
-std::string open_file(std::filesystem::path const &path) {
+auto open_file(std::filesystem::path const &path) {
   auto stream = std::ifstream(path);
   auto strstream = std::ostringstream();
 
@@ -14,8 +14,8 @@ std::string open_file(std::filesystem::path const &path) {
 
 int main([[maybe_unused]] int argc, char *argv[]) {
   auto code = open_file(argv[1]);
-  auto i = ceceo::interpreter({data(code), size(code)});
+  auto interpreter = ceceo::interpreter({data(code), size(code)});
 
-  auto result = i.interpret();
+  auto result = interpreter.interpret();
   std::cout << "program returned: " << result << '\n';
 }

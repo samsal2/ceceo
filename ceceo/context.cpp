@@ -19,6 +19,7 @@ void load_default_context(context &context) {
   context.builtins.insert({"and", builtin::op_and});
   context.builtins.insert({"not", builtin::op_not});
   context.builtins.insert({"%", builtin::op_mod});
+  context.builtins.insert({"null", builtin::op_null});
 }
 
 

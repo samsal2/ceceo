@@ -4,7 +4,6 @@
 #include <ceceo/atom.hpp>
 #include <span>
 
-
 namespace ceceo {
 
 struct context;
@@ -13,7 +12,7 @@ namespace ast {
 
 class list;
 
-} // ast
+} // namespace ast
 
 using builtinfn = atom (*)(context &context, ast::list const &args);
 
@@ -34,10 +33,10 @@ atom op_set(context &context, ast::list const &args);
 atom op_and(context &context, ast::list const &args);
 atom op_not(context &context, ast::list const &args);
 atom op_mod(context &context, ast::list const &args);
+atom op_null(context &context, ast::list const &args);
 
-}
+} // namespace builtin
 
-}
+} // namespace ceceo
 
 #endif
-

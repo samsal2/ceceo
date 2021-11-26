@@ -10,10 +10,10 @@ namespace ceceo {
 
 class parser {
 public:
-  constexpr explicit parser(std::string_view source) noexcept
+   explicit parser(std::string_view source) noexcept
       : tokenizer_(source) {}
 
-  constexpr auto consume(enum token::type type) {
+   auto consume(enum token::type type) {
     auto token = tokenizer_.previous();
 
     if (token.type() != type)
@@ -24,8 +24,8 @@ public:
     return token;
   }
 
-  constexpr auto previous() const noexcept { return tokenizer_.previous(); }
-  constexpr auto done() const noexcept { return tokenizer_.done(); }
+  auto previous() const noexcept { return tokenizer_.previous(); }
+  auto done() const noexcept { return tokenizer_.done(); }
 
   std::unique_ptr<ast::node> parse(context const &context);
   std::unique_ptr<ast::literal> parse_literal(context const &context);

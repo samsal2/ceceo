@@ -9,13 +9,13 @@ namespace ceceo::ast {
 
 class variable : public node {
 public:
-  constexpr variable(source_range range, symbol name) noexcept
+   variable(source_range range, symbol name) noexcept
       : node(range), name_(name) {}
 
   atom execute(context &context) override;
 
   bool is_variable() const noexcept override { return true; }
-  constexpr auto name() const noexcept { return name_; }
+  auto name() const noexcept { return name_; }
 
 private:
   symbol name_;

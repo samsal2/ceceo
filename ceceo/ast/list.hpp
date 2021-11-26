@@ -3,6 +3,7 @@
 
 #include <ceceo/ast/node.hpp>
 #include <vector>
+#include <span>
 
 namespace ceceo::ast {
 
@@ -12,6 +13,7 @@ public:
        std::vector<std::unique_ptr<node>> childs) noexcept;
 
   auto &view() noexcept { return list_; }
+
   auto const &view() const noexcept { return list_; }
 
   bool is_list() const noexcept override { return true; }

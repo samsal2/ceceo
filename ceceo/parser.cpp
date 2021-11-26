@@ -10,6 +10,9 @@ namespace ceceo {
 namespace detail {
 
 constexpr auto is_number(std::string_view str) noexcept {
+  if (0 == size(str))
+    return false;
+
   if ('+' == str[0] || '-' == str[0]) {
     str.remove_prefix(1);
 
@@ -56,7 +59,8 @@ parser::parse_variable([[maybe_unused]] context const &context) {
                                          symbol(token.value()));
 }
 
-std::unique_ptr<ast::literal> parser::parse_string([[maybe_unused]] context const &context) {
+std::unique_ptr<ast::literal>
+parser::parse_string([[maybe_unused]] context const &context) {
   auto const token = consume(token::type::atom);
   auto value = token.value();
 
@@ -98,10 +102,7 @@ std::unique_ptr<ast::list> parser::parse_list(context const &context) {
       return std::make_unique<ast::list>(source, std::move(list));
     }
 
-    case token::type::none:
-      consume(token::type::none);
-      break;
-
+    case token::type::none: 
     case token::type::end:
       throw std::runtime_error("expected )");
     }

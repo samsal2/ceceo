@@ -5,7 +5,7 @@ namespace ceceo {
 
 template <typename T> class badge {
   friend T;
-  badge() = default;
+  consteval badge() noexcept = default;
 };
 
 } // namespace ceceo

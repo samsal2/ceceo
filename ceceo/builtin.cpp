@@ -1,11 +1,13 @@
-#include <ceceo/builtin.hpp>
-#include <ceceo/context.hpp>
 #include <ceceo/ast/list.hpp>
 #include <ceceo/ast/variable.hpp>
+#include <ceceo/builtin.hpp>
+#include <ceceo/context.hpp>
 
 namespace ceceo::builtin {
 
-atom op_auto(context &context, ast::list const &args) {
+namespace detail {
+
+static atom op_auto_variable(context &context, ast::list const &args) {
   auto const &first = args.view().at(1);
 
   if (!first->is_variable())
@@ -18,6 +20,15 @@ atom op_auto(context &context, ast::list const &args) {
   context.variables.insert({name, value});
 
   return value;
+}
+
+} // namespace detail
+
+atom op_auto(context &context, ast::list const &args) {
+  if (args.view().at(1)->is_variable())
+    return detail::op_auto_variable(context, args);
+
+  return atom::null;
 }
 
 atom op_if(context &context, ast::list const &args) {
@@ -47,14 +58,14 @@ atom op_while(context &context, ast::list const &args) {
 
 atom op_cond(context &context, ast::list const &args) {
   if (1 == std::size(args)) // it only contains the keyword (cond)
-    throw std::runtime_error("bultin::op_cond: empty cond");
+    throw std::runtime_error("builtin::op_cond: empty cond");
 
   // test everything that's not the last statement
   for (size_t i = 1; i < std::size(args) - 1; ++i) {
     auto const &current = args.view()[i];
 
     if (!current->is_list())
-      throw std::runtime_error("ast::cond_statment: expected a list");
+      throw std::runtime_error("builtin::op_cond: expected a list");
 
     auto const &list = static_cast<ast::list const &>(*current);
     auto const test = list.view().at(0)->execute(context);
@@ -130,21 +141,21 @@ atom op_eq(context &context, ast::list const &args) {
   if (atom::type::symbol == lhs.type() && atom::type::symbol == rhs.type())
     return atom(lhs.as_symbol().value() == rhs.as_symbol().value());
 
-  throw std::runtime_error("ast::eq_op: comparing symbol with number");
+  throw std::runtime_error("builtin::eq_op: comparing symbol with number");
 }
 
 atom op_set(context &context, ast::list const &args) {
   auto const &first = args.view().at(1);
 
   if (!first->is_variable())
-    throw std::runtime_error("ast::set_statement: expected literal");
+    throw std::runtime_error("builtin::op_set: expected variable");
 
   auto const &var = static_cast<ast::variable const &>(*first);
   auto &vars = context.variables;
   auto found = vars.find(var.name().value());
 
   if (end(vars) == found)
-    throw std::runtime_error("ast::set_statment: variable not found");
+    throw std::runtime_error("builtin::op_set: variable not found");
 
   found->second = args.view().at(2)->execute(context);
 
@@ -165,4 +176,9 @@ atom op_mod(context &context, ast::list const &args) {
   return atom(lhs.as_number().value() % rhs.as_number().value());
 }
 
+atom op_null([[maybe_unused]] context &context,
+             [[maybe_unused]] ast::list const &args) {
+  return atom::null;
 }
+
+} // namespace ceceo::builtin
