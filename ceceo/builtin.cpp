@@ -163,10 +163,12 @@ atom op_set(context &context, ast::list const &args) {
 }
 
 atom op_and(context &context, ast::list const &args) {
-  auto const lhs = args.view().at(1)->execute(context);
-  auto const rhs = args.view().at(2)->execute(context);
+  auto state = true;
 
-  return atom(lhs.as_number().value() && rhs.as_number().value());
+  for (std::size_t i = 1; i < args.view().size(); ++i)
+    state = state && args.view().at(i)->execute(context).as_number().value();
+
+  return atom(state);
 }
 
 atom op_mod(context &context, ast::list const &args) {
@@ -179,6 +181,15 @@ atom op_mod(context &context, ast::list const &args) {
 atom op_null([[maybe_unused]] context &context,
              [[maybe_unused]] ast::list const &args) {
   return atom::null;
+}
+
+atom op_or(context &context, ast::list const &args) {
+  auto state = false;
+
+  for (std::size_t i = 1; i < args.view().size(); ++i)
+    state = state || args.view().at(i)->execute(context).as_number().value();
+
+  return atom(state);
 }
 
 } // namespace ceceo::builtin

@@ -54,6 +54,7 @@ private:
     number as_number;
   };
 
+
   storage storage_;
 };
 

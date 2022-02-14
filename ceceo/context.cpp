@@ -20,6 +20,7 @@ void load_default_context(context &context) {
   context.builtins.insert({"not", builtin::op_not});
   context.builtins.insert({"%", builtin::op_mod});
   context.builtins.insert({"null", builtin::op_null});
+  context.builtins.insert({"or", builtin::op_or});
 }
 
 

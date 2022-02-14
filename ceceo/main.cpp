@@ -12,7 +12,10 @@ auto open_file(std::filesystem::path const &path) {
   return strstream.str();
 }
 
-int main([[maybe_unused]] int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
+  if (argc <= 1)
+    throw std::runtime_error("missing program to run");
+
   auto code = open_file(argv[1]);
   auto interpreter = ceceo::interpreter({data(code), size(code)});
 
