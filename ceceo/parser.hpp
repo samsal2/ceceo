@@ -10,10 +10,9 @@ namespace ceceo {
 
 class parser {
 public:
-   explicit parser(std::string_view source) noexcept
-      : tokenizer_(source) {}
+  explicit parser(std::string_view source) noexcept : tokenizer_(source) {}
 
-   auto consume(enum token::type type) {
+  auto consume(enum token::type type) {
     auto token = tokenizer_.previous();
 
     if (token.type() != type)

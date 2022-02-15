@@ -36,7 +36,6 @@ atom op_mod(context &context, ast::list const &args);
 atom op_null(context &context, ast::list const &args);
 atom op_or(context &context, ast::list const &args);
 
-
 } // namespace builtin
 
 } // namespace ceceo

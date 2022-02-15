@@ -12,12 +12,12 @@ namespace ceceo::ast {
 
 class literal : public node {
 public:
-   explicit literal(source_range source, atom value) noexcept
+  explicit literal(source_range source, atom value) noexcept
       : node(source), value_(value) {}
 
   virtual bool is_literal() const noexcept override { return true; }
 
-   auto peek(badge<parser>) const noexcept { return value_; }
+  auto peek(badge<parser>) const noexcept { return value_; }
 
   atom execute([[maybe_unused]] context &context) override { return value_; }
 

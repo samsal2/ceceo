@@ -5,7 +5,7 @@
 #include <ceceo/source_range.hpp>
 
 namespace ceceo {
-struct  context;
+struct context;
 } // namespace ceceo
 
 namespace ceceo::ast {

@@ -21,8 +21,7 @@ concept consume_condition = requires(F &&functor, char c) {
 
 static auto is_atom(char c) noexcept {
   return std::isalpha(c) || std::isdigit(c) || '+' == c || '-' == c ||
-         '*' == c || '/' == c || '<' == c || '>' == c || '%' == c ||
-         '\"' == c;
+         '*' == c || '/' == c || '<' == c || '>' == c || '%' == c || '\"' == c;
 }
 
 static auto is_whitespace(char c) noexcept {
@@ -42,9 +41,7 @@ public:
   auto done() const noexcept { return position_ == size(source_); }
 
 private:
-  auto peek(size_t offset = 0) noexcept {
-    return source_[position_ + offset];
-  }
+  auto peek(size_t offset = 0) noexcept { return source_[position_ + offset]; }
 
   auto consume() noexcept {
     auto const start = std::exchange(position_, position_ + 1);

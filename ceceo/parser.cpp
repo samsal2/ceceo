@@ -55,8 +55,7 @@ std::unique_ptr<ast::literal> parser::parse_literal(context const &context) {
 std::unique_ptr<ast::variable>
 parser::parse_variable([[maybe_unused]] context const &context) {
   auto const token = consume(token::type::atom);
-  return std::make_unique<ast::variable>(token.range(),
-                                         symbol(token.value()));
+  return std::make_unique<ast::variable>(token.range(), symbol(token.value()));
 }
 
 std::unique_ptr<ast::literal>
@@ -102,7 +101,7 @@ std::unique_ptr<ast::list> parser::parse_list(context const &context) {
       return std::make_unique<ast::list>(source, std::move(list));
     }
 
-    case token::type::none: 
+    case token::type::none:
     case token::type::end:
       throw std::runtime_error("expected )");
     }

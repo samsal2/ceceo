@@ -9,7 +9,7 @@ namespace ceceo::ast {
 
 class variable : public node {
 public:
-   variable(source_range range, symbol name) noexcept
+  variable(source_range range, symbol name) noexcept
       : node(range), name_(name) {}
 
   atom execute(context &context) override;

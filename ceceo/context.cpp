@@ -23,5 +23,4 @@ void load_default_context(context &context) {
   context.builtins.insert({"or", builtin::op_or});
 }
 
-
 } // namespace ceceo

@@ -1,8 +1,8 @@
 #ifndef CECEO_INTERPRETER_HPP_
 #define CECEO_INTERPRETER_HPP_
 
-#include <ceceo/parser.hpp>
 #include <ceceo/context.hpp>
+#include <ceceo/parser.hpp>
 
 namespace ceceo {
 

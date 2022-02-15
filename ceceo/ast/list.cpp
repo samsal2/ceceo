@@ -7,7 +7,6 @@ list::list(source_range source,
            std::vector<std::unique_ptr<node>> childs) noexcept
     : node(source), list_(std::move(childs)) {}
 
-
 atom list::execute(context &context) {
   auto const name = view().at(0)->execute(context).as_symbol().value();
   auto const &builtins = context.builtins;
