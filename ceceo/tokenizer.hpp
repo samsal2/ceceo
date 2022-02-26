@@ -15,13 +15,15 @@ concept same_as = requires {
 
 // TODO convertible_to
 template <typename F>
-concept consume_condition = requires(F &&functor, char c) {
-  { std::forward<F>(functor)(c) } -> same_as<bool>;
+concept consume_condition = requires(F &&fun, char c) {
+  { std::forward<F>(fun)(c) } -> same_as<bool>;
 };
 
+// FIXME(samuel): this
 static auto is_atom(char c) noexcept {
   return std::isalpha(c) || std::isdigit(c) || '+' == c || '-' == c ||
-         '*' == c || '/' == c || '<' == c || '>' == c || '%' == c || '\"' == c;
+         '*' == c || '/' == c || '<' == c || '>' == c || '%' == c || '\"' == c 
+            || '=' == c || '!' == c || '&' == c;
 }
 
 static auto is_whitespace(char c) noexcept {
@@ -38,7 +40,7 @@ public:
 
   token previous() const noexcept { return previous_; }
 
-  auto done() const noexcept { return position_ == size(source_); }
+  auto done() const noexcept { return size(source_) == position_; }
 
 private:
   auto peek(size_t offset = 0) noexcept { return source_[position_ + offset]; }

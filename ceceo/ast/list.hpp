@@ -2,7 +2,6 @@
 #define CECEO_AST_LIST_HPP_
 
 #include <ceceo/ast/node.hpp>
-#include <span>
 #include <vector>
 
 namespace ceceo::ast {

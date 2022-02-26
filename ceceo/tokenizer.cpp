@@ -1,5 +1,6 @@
 #include <ceceo/token.hpp>
 #include <ceceo/tokenizer.hpp>
+#include <iostream>
 
 namespace ceceo {
 

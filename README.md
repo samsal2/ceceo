@@ -6,9 +6,9 @@ a toy lisp like language
 
 (while (< i 30)
   (prog 
-    (cond ((and (not (% i 3)) (not (% i 5))) (print "FizzBuzz"))
-          ((not (% i 3)) (print "Fizz"))
-          ((not (% i 5)) (print "Buzz"))
+    (cond ((&& (! (% i 3)) (! (% i 5))) (print "FizzBuzz"))
+          ((! (% i 3)) (print "Fizz"))
+          ((! (% i 5)) (print "Buzz"))
           (print i))
     (set i (+ i 1))))
 ```

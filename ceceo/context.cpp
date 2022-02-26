@@ -14,13 +14,14 @@ void load_default_context(context &context) {
   context.builtins.insert({"+", builtin::op_sum});
   context.builtins.insert({"-", builtin::op_sub});
   context.builtins.insert({"<", builtin::op_less});
+  context.builtins.insert({"<=", builtin::op_less_eq});
   context.builtins.insert({">", builtin::op_more});
-  context.builtins.insert({"eq", builtin::op_eq});
-  context.builtins.insert({"and", builtin::op_and});
-  context.builtins.insert({"not", builtin::op_not});
+  context.builtins.insert({"==", builtin::op_eq});
+  context.builtins.insert({"&&", builtin::op_and});
+  context.builtins.insert({"!", builtin::op_not});
   context.builtins.insert({"%", builtin::op_mod});
   context.builtins.insert({"null", builtin::op_null});
-  context.builtins.insert({"or", builtin::op_or});
+  context.builtins.insert({"||", builtin::op_or});
 }
 
 } // namespace ceceo

@@ -27,6 +27,7 @@ atom op_print(context &context, ast::list const &args);
 atom op_sum(context &context, ast::list const &args);
 atom op_sub(context &context, ast::list const &args);
 atom op_less(context &context, ast::list const &args);
+atom op_less_eq(context &context, ast::list const &args);
 atom op_more(context &context, ast::list const &args);
 atom op_eq(context &context, ast::list const &args);
 atom op_set(context &context, ast::list const &args);
