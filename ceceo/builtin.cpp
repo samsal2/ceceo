@@ -36,10 +36,10 @@ atom op_if(context &context, ast::list const &args) {
 
   if (atom::type::number != test.type())
     throw std::runtime_error("bultin::op_auto: expected number");
- 
+
   if (test.as_number().value())
     return args.view().at(2)->execute(context);
-  
+
   if (4 == size(args.view()))
     return args.view().at(3)->execute(context);
 
@@ -129,7 +129,6 @@ atom op_less_eq(context &context, ast::list const &args) {
 
   return atom(lhs.as_number().value() <= rhs.as_number().value());
 }
-
 
 atom op_more(context &context, ast::list const &args) {
   auto const lhs = args.view().at(1)->execute(context);

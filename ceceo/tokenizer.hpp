@@ -22,8 +22,8 @@ concept consume_condition = requires(F &&fun, char c) {
 // FIXME(samuel): this
 static auto is_atom(char c) noexcept {
   return std::isalpha(c) || std::isdigit(c) || '+' == c || '-' == c ||
-         '*' == c || '/' == c || '<' == c || '>' == c || '%' == c || '\"' == c 
-            || '=' == c || '!' == c || '&' == c;
+         '*' == c || '/' == c || '<' == c || '>' == c || '%' == c ||
+         '\"' == c || '=' == c || '!' == c || '&' == c;
 }
 
 static auto is_whitespace(char c) noexcept {
