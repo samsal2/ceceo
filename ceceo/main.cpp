@@ -19,6 +19,8 @@ int main(int argc, char *argv[]) {
   auto code = open_file(argv[1]);
   auto interpreter = ceceo::interpreter({data(code), size(code)});
 
-  auto result = interpreter.interpret();
+  [[maybe_unused]] auto result = interpreter.interpret();
+#if 0
   std::cout << "program returned: " << result << '\n';
+#endif
 }

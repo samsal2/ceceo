@@ -76,6 +76,8 @@ std::unique_ptr<ast::list> parser::parse_list(context const &context) {
   auto const start = consume(token::type::left_parenthesis);
   auto list = std::vector<std::unique_ptr<ast::node>>();
 
+  // ((1))
+
   while (!tokenizer_.done()) {
     switch (tokenizer_.previous().type()) {
     case token::type::left_parenthesis:
@@ -108,11 +110,6 @@ std::unique_ptr<ast::list> parser::parse_list(context const &context) {
   }
 
   throw std::runtime_error("expected )");
-}
-
-std::unique_ptr<ast::node> parser::parse(context const &context) {
-  consume(token::type::none);
-  return parse_list(context);
 }
 
 } // namespace ceceo

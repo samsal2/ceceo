@@ -12,6 +12,9 @@ interpreter::interpreter(std::string_view source) {
 
   while (token::type::left_parenthesis == p.previous().type())
     expressions_.push_back(p.parse_list(context_));
+
+  if (!p.done())
+    throw std::runtime_error("parser: unable to interpret");
 }
 
 atom interpreter::interpret() {

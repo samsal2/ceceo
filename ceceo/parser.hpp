@@ -26,7 +26,6 @@ public:
   auto previous() const noexcept { return tokenizer_.previous(); }
   auto done() const noexcept { return tokenizer_.done(); }
 
-  std::unique_ptr<ast::node> parse(context const &context);
   std::unique_ptr<ast::literal> parse_literal(context const &context);
   std::unique_ptr<ast::variable> parse_variable(context const &context);
   std::unique_ptr<ast::list> parse_list(context const &context);

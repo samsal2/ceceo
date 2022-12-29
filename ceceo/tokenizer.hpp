@@ -2,6 +2,7 @@
 #define CECEO_TOKENIZER_HPP_
 
 #include <ceceo/token.hpp>
+#include <iostream>
 
 namespace ceceo {
 
@@ -40,7 +41,9 @@ public:
 
   token previous() const noexcept { return previous_; }
 
-  auto done() const noexcept { return size(source_) == position_; }
+  auto done() const noexcept { 
+    return size(source_) + 1 == position_; 
+  }
 
 private:
   auto peek(size_t offset = 0) noexcept { return source_[position_ + offset]; }
@@ -65,9 +68,13 @@ private:
     return source_range(source_, start, position_);
   }
 
-  auto consume_whitespace() { return consume_while(detail::is_whitespace); }
+  auto consume_whitespace() { 
+    return consume_while(detail::is_whitespace); 
+  }
 
-  auto consume_atom() { return consume_while(detail::is_atom); }
+  auto consume_atom() { 
+    return consume_while(detail::is_atom); 
+  }
 
   auto consume_string() {
     auto start = position_;
